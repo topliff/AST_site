@@ -1,0 +1,324 @@
+/* ============================================================
+   AllStarTeams — Static GitHub Pages Site
+   Theme: Flax (light, warm cream/sand + navy + orange accent)
+   ============================================================ */
+
+/* --- Custom Properties --- */
+:root {
+  --color-bg:            rgb(230, 226, 219);
+  --color-card-bg:       rgb(249, 248, 245);
+  --color-text:          rgb(22, 22, 19);
+  --color-body:          rgb(77, 77, 77);
+  --color-accent-navy:   rgb(32, 76, 142);
+  --color-accent-orange: rgb(255, 164, 79);
+  --color-label-bg:      rgb(227, 227, 232);
+  --color-label-text:    rgb(22, 22, 19);
+  --color-callout-bg:    rgb(242, 242, 242);
+  --color-grid-cell:     rgb(237, 235, 227);
+  --color-divider:       rgba(22, 22, 19, 0.15);
+
+  --font-heading: 'DM Sans', sans-serif;
+  --font-body:    'Inter', sans-serif;
+
+  --max-width: 860px;
+  --section-pad: 80px 24px;
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--color-accent-navy);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+ul { padding-left: 1.25rem; }
+li { margin-bottom: 0.35rem; }
+
+/* --- Navbar --- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--color-card-bg);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+}
+.navbar img {
+  width: 160px;
+  height: auto;
+}
+
+/* --- Page wrapper --- */
+.page-body {
+  padding-top: 72px; /* offset for fixed navbar */
+}
+
+/* --- Section wrapper --- */
+section {
+  padding: var(--section-pad);
+}
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* --- Typography --- */
+h1 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: var(--color-text);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+h2 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--color-accent-navy);
+  margin-bottom: 0.75rem;
+}
+h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--color-accent-navy);
+  margin-bottom: 0.5rem;
+}
+h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-bottom: 0.4rem;
+}
+p {
+  color: var(--color-body);
+  margin-bottom: 0.9rem;
+}
+p:last-child { margin-bottom: 0; }
+
+em.accent {
+  color: var(--color-accent-orange);
+  font-style: italic;
+}
+
+strong { font-weight: 600; }
+
+/* --- Label / Badge --- */
+.label {
+  display: inline-block;
+  background: var(--color-label-bg);
+  color: var(--color-label-text);
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+/* --- Buttons --- */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 1.5rem;
+}
+.btn-solid, .btn-outline {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-solid {
+  background: rgb(40, 40, 47);
+  color: #fff;
+  border: none;
+}
+.btn-solid:hover {
+  background: #404047;
+  text-decoration: none;
+}
+.btn-outline {
+  background: var(--color-card-bg);
+  color: var(--color-text);
+  border: 1.5px solid var(--color-text);
+}
+.btn-outline:hover {
+  background: var(--color-grid-cell);
+  text-decoration: none;
+}
+
+/* --- Callout Box --- */
+.callout {
+  background: var(--color-callout-bg);
+  border-left: 3px solid var(--color-accent-navy);
+  border-radius: 4px;
+  padding: 20px 24px;
+  font-weight: 600;
+  color: var(--color-accent-navy);
+  font-family: var(--font-heading);
+}
+
+/* --- Blockquote --- */
+blockquote {
+  border-left: 3px solid var(--color-accent-orange);
+  padding: 16px 24px;
+  font-style: italic;
+  background: rgba(255, 164, 79, 0.06);
+  border-radius: 4px;
+  margin: 1.5rem 0;
+  color: var(--color-body);
+}
+blockquote cite {
+  display: block;
+  margin-top: 0.6rem;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.875rem;
+  color: var(--color-body);
+}
+
+/* --- Cards --- */
+.card {
+  background: var(--color-grid-cell);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* --- Grid layouts --- */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .navbar { padding: 12px 20px; }
+  section { padding: 48px 16px; }
+}
+
+/* --- Stats --- */
+.stat-number {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  color: var(--color-accent-navy);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.stat-label {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--color-body);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* --- Full-width image --- */
+.img-full {
+  width: 100%;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+/* --- Section spacing helpers --- */
+.mt-1 { margin-top: 1rem; }
+.mt-2 { margin-top: 1.5rem; }
+.mt-3 { margin-top: 2.5rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 1.5rem; }
+
+/* --- Pull quote (large H4 used in teamwork section) --- */
+.pull-quote {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* --- 5-step continuum --- */
+.continuum {
+  display: flex;
+  gap: 12px;
+  margin: 1.5rem 0;
+  counter-reset: step;
+}
+.continuum-step {
+  flex: 1;
+  background: var(--color-grid-cell);
+  border-radius: 8px;
+  padding: 16px 14px;
+  position: relative;
+}
+.continuum-step::before {
+  counter-increment: step;
+  content: counter(step);
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--color-accent-navy);
+  margin-bottom: 0.4rem;
+}
+@media (max-width: 768px) {
+  .continuum { flex-direction: column; }
+}
+
+/* --- Bullet columns (curriculum grid) --- */
+.col-bullets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 1rem 0;
+}
+.col-bullets ul { padding-left: 1.1rem; }
+@media (max-width: 768px) {
+  .col-bullets { grid-template-columns: 1fr; }
+}
+
+/* --- Footer --- */
+footer {
+  background: var(--color-card-bg);
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 0.85rem;
+  color: var(--color-body);
+  border-top: 1px solid var(--color-divider);
+}
+
+/* --- Section backgrounds (alternate) --- */
+section:nth-child(even) {
+  background: var(--color-card-bg);
+}

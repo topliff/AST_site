@@ -1,0 +1,744 @@
+# GAMMA → GITHUB PAGES MIGRATION DOCUMENT
+# Source: AllStarTeams
+# URL: https://allstarteams-my0mguu.gamma.site/
+# Extracted: 2026-03-17 (via browser extension — full render access)
+# Theme: "Flax" (light, warm cream/sand + navy + orange accent)
+
+---
+
+## TASK FOR CLAUDE CODE
+
+You are building a static GitHub Pages site from a Gamma.app export.
+The content below contains all text, theme specs, image URLs, and layout
+instructions extracted directly from the live rendered page.
+
+Create all files inside a folder called `newsite/` at the repo root:
+
+  newsite/
+    index.html
+    style.css
+    images/           (populated by download-images.sh)
+    download-images.sh
+    optimize-images.sh
+    README.md
+
+Do NOT put any files at the repo root. The site lives entirely inside newsite/.
+
+No build step. No npm. Pure HTML + CSS + optional vanilla JS for animations.
+Use AOS (https://unpkg.com/aos@2.3.1) for scroll-triggered fade-ins.
+
+NOTE — GAMMA ARTIFACT CLEANUP:
+All buttons in this site have empty href="" or href="#". There are NO external
+links in this document. Do not reference gamma.app anywhere.
+
+---
+
+## STEP 1 — DOWNLOAD IMAGES
+
+Write `newsite/download-images.sh` using `curl` to download all images listed
+below into `newsite/images/` using the exact filenames shown.
+
+---
+
+## STEP 2 — OPTIMIZE / RESIZE IMAGES
+
+Write `newsite/optimize-images.sh` using `sips` (macOS built-in).
+Run AFTER download. Resize in-place.
+
+Image source dimensions and resize targets:
+
+  new-ast-logo.png               825×302   → resize to max-width 400px (logo)
+  3-ages-3-grces.png            1453×811   → resize to max-width 1200px
+  SELF-AWARENESS-GAP.png        1536×1024  → resize to max-width 1200px
+  joes-on-laptop-star-self-assessment.png  1066×809  → resize to max-width 900px
+  star-card-design.png          1170×790   → resize to max-width 900px
+  team-lion-star-cards-strengths-flow-fusion.png  715×685  → no resize needed
+  ORGANIZATION-CONSTELLATION.png 1261×704  → resize to max-width 1200px
+  2-icons-ai-ast.png            1048×506   → resize to max-width 600px
+  wired-to-imagine.png          1420×798   → resize to max-width 1200px
+  Picture1.png                  2000×418   → resize to max-width 1200px (PRIORITY — very wide)
+  Picture8.png                   573×331   → no resize needed (already small)
+
+---
+
+## STEP 3 — BUILD THE SITE
+
+### THEME & DESIGN SYSTEM
+
+This is a LIGHT theme with warm cream/sand tones.
+
+Heading Font:     DM Sans (Google Fonts, weights 400 600 700 800)
+Body Font:        Inter (Google Fonts, weights 300 400 500 600)
+Google Fonts URL: https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap
+
+Colors:
+  --color-bg:           rgb(230, 226, 219)   /* warm sand/cream page bg */
+  --color-card-bg:      rgb(249, 248, 245)   /* warm white card bg */
+  --color-text:         rgb(22, 22, 19)      /* near-black heading text */
+  --color-body:         rgb(77, 77, 77)      /* body paragraph text */
+  --color-accent-navy:  rgb(32, 76, 142)     /* #204C8E — navy blue */
+  --color-accent-orange: rgb(255, 164, 79)   /* #FFA44F — orange/amber */
+  --color-label-bg:     rgb(227, 227, 232)   /* light grey label bg */
+  --color-label-text:   rgb(22, 22, 19)
+  --color-callout-bg:   rgb(242, 242, 242)
+  --color-grid-cell:    rgb(237, 235, 227)   /* warm off-white for shaped cells */
+  --color-divider:      rgba(22,22,19,0.15)
+
+Typography rules:
+  - H1 headings: DM Sans, 700-800, color #161613 (near-black)
+  - H1 with orange italic portion: the italic/em part renders in --color-accent-orange
+    Example: "Know Yourself: <em>Discover New Potential.</em>"
+    Example: "Looking Inward. <em>Looking Outward.</em>"
+    (Gamma uses text color marks to apply orange to specific spans)
+  - H2/H3: DM Sans, navy (#204C8E)
+  - H4: DM Sans 600, color #161613
+  - Body: Inter, color rgb(77,77,77)
+  - Links: navy #204C8E, no underline by default, underline on hover
+
+Label / Badge (.label):
+  background: rgb(227, 227, 232)
+  color: #161613
+  border-radius: 4px (flat-ish, not pill)
+  padding: 4px 12px
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase
+  display: inline-block
+
+Button Primary (.btn-solid):
+  background: rgb(40, 40, 47)   /* #28282F near-black */
+  color: rgb(22, 22, 19)        /* NOTE: use #fff for accessibility */
+  border-radius: 6px; padding: 12px 28px; font-weight: 600; font-family: DM Sans
+  hover: background #404047
+
+Button Outline (.btn-outline):
+  background: rgb(249, 248, 245)
+  border: 1.5px solid rgb(22, 22, 19)
+  color: rgb(22, 22, 19)
+  border-radius: 6px; padding: 12px 28px; font-weight: 600
+
+Callout Box (.callout):
+  background: rgb(242, 242, 242)
+  border-left: 3px solid --color-accent-navy
+  border-radius: 4px; padding: 20px 24px
+  font-weight: 600; color: --color-accent-navy
+
+Blockquote (.blockquote):
+  border-left: 3px solid --color-accent-orange
+  padding: 16px 24px; font-style: italic
+  background: rgba(255,164,79,0.06); border-radius: 4px
+
+Smart-layout cards (.card):
+  background: rgb(237, 235, 227)  /* warm off-white */
+  border-radius: 8px; padding: 20px
+  (no border — uses background color to define boundary)
+
+Page section spacing: 80px top/bottom padding per card/section
+Max content width: 860px centered, padding 0 24px
+Navbar: fixed top, background rgb(249,248,245), shadow 0 1px 0 rgba(0,0,0,0.08)
+  Logo left (new-ast-logo.png), no nav links, padding 16px 40px
+
+Stat numbers:
+  Font: DM Sans 800, color: --color-accent-navy (#204C8E)
+  Size: clamp(2.5rem, 5vw, 3.5rem)
+  Label below stat: Inter 400, small, text-muted
+
+---
+
+## IMAGES TO DOWNLOAD
+
+  new-ast-logo.png
+    -> https://cdn.gamma.app/d8jz92w05htvuyh/3efe0102e5164a9da43d9e04c35d0226/original/new-ast-logo.png
+
+  3-ages-3-grces.png
+    -> https://cdn.gamma.app/d8jz92w05htvuyh/812498ca22e94d1bb82be81629221d77/original/3-ages-3-grces.png
+
+  SELF-AWARENESS-GAP.png
+    -> https://cdn.gamma.app/d8jz92w05htvuyh/bef41273d0454540b63798ad7b7e14ac/original/SELF-AWARENESS-GAP.png
+
+  joes-on-laptop-star-self-assessment.png
+    -> https://cdn.gamma.app/d8jz92w05htvuyh/8891fda2da0140f7965bcb65078e2bf4/original/joes-on-laptop-star-self-assessment.png
+
+  star-card-design.png
+    -> https://cdn.gamma.app/d8jz92w05htvuyh/201ae6221f7d44b5853a91c0be31ca6e/original/star-card-design.png
+
+  team-lion-star-cards-strengths-flow-fusion.png
+    -> https://cdn.gamma.app/d8jz92w05htvuyh/74e7069636cc4be0a8145aa8bc7efcc3/original/team-lion-star-cards-strengths-flow-fusion.png
+
+  2-icons-ai-ast.png
+    -> https://cdn.gamma.app/d8jz92w05htvuyh/2425a8703377422f85753c83b3c76136/original/2-icons-ai-ast.png
+
+  ORGANIZATION-CONSTELLATION.png
+    -> https://cdn.gamma.app/d8jz92w05htvuyh/3e0475fb961a46188428e7bbc9cd507a/original/ORGANIZATION-CONSTELLATION.png
+
+  wired-to-imagine.png
+    -> https://cdn.gamma.app/d8jz92w05htvuyh/6956079e97034f959ec12a6a65583b32/original/wired-to-imagine.png
+
+  Picture1.png
+    -> https://cdn.gamma.app/d8jz92w05htvuyh/fc98b1c469a0417ab342fe8075d03b45/original/Picture1.png
+
+  Picture8.png
+    -> https://cdn.gamma.app/d8jz92w05htvuyh/8405c386493f4d01acf4179b2ab17b5b/original/Picture8.png
+
+NOTE: Two additional images appear in the Gamma source (2kPlj4NLO2P4SfIBgtyn5.png
+and 0bkHYU0E0Ys6ZACN.png) as background/accent images but were not prominently
+rendered in the page. Skip these unless you find them visually important.
+
+---
+
+## LINK AUDIT
+
+All buttons in this site currently have empty or # hrefs — they are all
+placeholders. Do NOT invent links. Use href="#" for all buttons.
+
+The README should include a pending link table:
+
+  Button: "Learn More"              → href="#"  (needs destination)
+  Button: "Start with AllStarTeams" → href="#"  (needs: login/signup URL)
+  Button: "Explore Imaginal Agility →" → href="https://ImaginalAgility.com" (known)
+  Button: "Start a Conversation"    → href="#"  (needs: contact form or email)
+  Button: "Brochure →"              → href="#"  (needs: PDF upload)
+
+Only "Explore Imaginal Agility →" has a known destination — wire that one up.
+All others stay as href="#".
+
+---
+
+## PAGE STRUCTURE (18 sections)
+
+This is a long single-page site. Implement as one index.html with anchor
+links if desired. All 18 "cards" become <section> elements.
+
+════════════════════════
+SECTION 1 — HERO
+════════════════════════
+
+  IMG: new-ast-logo.png   (top of content, ~200px wide)
+  H1: Know Yourself: <em style="color:var(--color-accent-orange)">Discover New Potential.</em>
+  IMG: 3-ages-3-grces.png  (full width hero image — 3 women of different ages)
+  P (bold): AllStarTeams enhances individual self-awareness in order to better
+    appreciate one's <em>core strengths</em>, <em>optimal flow state</em>,
+    <em>quality of wellbeing</em>, and <em>future self-continuity pathways</em>.
+  P (bold): Self-awareness is foundational to effective teamwork and
+    organizational performance.
+  BTN-GROUP:
+    BTN[outline]: Learn More  [href="#"]
+
+════════════════════════
+SECTION 2 — THE WORKPLACE REALITY: STATS
+════════════════════════
+
+  LABEL: THE WORKPLACE REALITY
+  H1: One Critical Gap: Costs Everything.
+  P: Despite massive investments in technology and training, the fundamental
+     human capabilities that drive collaboration, performance, and innovation
+     continue to decline. The culprit isn't skill. It's self-knowledge.
+
+  STATS GRID (4 cols):
+    [Col 1]: STAT: 95%
+             H4: Believe They're Self-Aware
+             P: Only 12% actually are, according to researcher Tasha Eurich
+
+    [Col 2]: STAT: 70%
+             H4: Workforce Disengaged
+             P: Costing $8.8 trillion in lost productivity globally
+
+    [Col 3]: STAT: 50%
+             H4: Doubt Their Managers
+             P: Lack confidence in leadership's ability to succeed in 2 years
+                (Gartner, 2025)
+
+    [Col 4]: STAT: 1 in 4
+             H4: Employees Thriving
+             P: The vast majority are not performing at their potential
+
+════════════════════════
+SECTION 3 — A VICIOUS CYCLE
+════════════════════════
+
+  LABEL: THE WORKPLACE REALITY
+  H1: A Vicious Cycle: Predictable Results.
+  P: When individuals lack self-awareness, they project onto others, misread
+     signals, and manage from deficits. The negative mind — wired for threat
+     — amplifies this at every level: individual, relational, and
+     organizational. A self-reinforcing cycle emerges that no technology can fix.
+  IMG: SELF-AWARENESS-GAP.png  (full width diagram)
+  CARDS (3 cols):
+    [Card]: H4: The Root Cause
+            P: Poor communication breeds unresolved conflict. Conflict erodes
+               psychological safety. And the loss of safety deepens the
+               blindspots that started the cycle. No tool, training, or
+               technology can interrupt this loop without first addressing
+               self-awareness at its root.
+    [Card]: H4: The Negative Mind
+            P: Our brains encode threats more strongly than strengths — a
+               million years of survival conditioning. AllStarTeams deliberately
+               redirects this bias toward potential.
+    [Card]: H4: Introspection Illusion
+            P: What we believe about ourselves is often colored by fear and
+               false certainty. The structured AST assessment cuts through the
+               noise with evidence-based precision.
+
+════════════════════════
+SECTION 4 — WHAT SELF-AWARENESS REALLY IS
+════════════════════════
+
+  LABEL: WHAT SELF-AWARENESS REALLY IS
+  H1: Looking Inward. <em style="color:var(--color-accent-orange)">Looking Outward.</em>
+  GRID (2 cols):
+    [Col 1 — callout box]:
+      CALLOUT: "The good news: self-awareness is achievable quickly and
+        practically by almost anyone — with the right scaffolding."
+    [Col 2 — body text]:
+      P: True self-awareness — as defined by the research — means understanding
+         both who you are internally and how others perceive you, then using that
+         balanced insight to take positive, actionable steps forward. Most
+         approaches address one side. AllStarTeams uniquely integrates both.
+
+════════════════════════
+SECTION 5 — THE MICROCOURSE + STAR CARD (combined card in Gamma)
+════════════════════════
+
+  LABEL: THE MICROCOURSE
+  H1: A 90-Minute Journey:
+      <em style="color:var(--color-accent-orange)"> Self-Exploration</em>
+  P: The <strong>AllStarTeams Microcourse</strong> is a complete, self-contained
+     experience. Available to any professional, anywhere — independently or
+     through an organization. It integrates <strong>Five Dimensions of
+     Self-Awareness</strong> rarely combined in a single self-review process.
+
+  GRID (2 cols):
+    [Col 1 — image]:
+      IMG: joes-on-laptop-star-self-assessment.png
+    [Col 2 — content]:
+      H4: Individual
+      P: Any professional can access the microcourse independently — funded by
+         their employer, professional association, or themselves. The value is
+         entirely theirs.
+      UL:
+        - Self-paced, 90-minute microcourse
+        - Star Card + AI holistic report
+        - Personal growth plan + quarterly check-ins
+        - Eligible for professional association PDUs
+
+  LABEL: DIGITAL ARTIFACT
+  H1: Your Star Card. A Process of Becoming.
+  P: The Star Card is a compact visual profile that captures a person's core
+     strengths, flow attributes, and aspirations in one integrated view. It
+     provides a simple, shareable language for understanding how individuals
+     think, feel, plan, and act. Imagination is recognized as the apex
+     strength, symbolized by the star at the center of the framework.
+
+  GRID (2 cols):
+    [Col 1]:
+      IMG: star-card-design.png
+    [Col 2]:
+      P: Design Origins
+      P: Rooted in the work of Seligman (Positive Psychology),
+         Csikszentmihalyi (Flow Theory), and Jung (Imaginal Psychology)
+         — grounded in the ancient concept of eudaimonia — the Star Card
+         bridges philosophy and practice.
+      H4: Holistic Report
+      P: An AI-synthesized narrative connecting all five dimensions into a
+         coherent, personalized forward looking, positive report.
+      H4: Quarterly Check-Ins
+      P: The journey doesn't end. Return quarterly to one's growth plan,
+         track progress, and continue to enhance self-understanding over time.
+
+════════════════════════
+SECTION 6 — TRANSFORMS TEAMWORK (3 scales)
+════════════════════════
+
+  LABEL: THREE SCALES OF IMPACT
+  H1: <em style="color:var(--color-accent-orange)"> Transforms Teamwork.</em>
+  GRID (2 cols):
+    [Col 1]:
+      H4 (as pull quote/large): When team members share their Star Cards in a
+         facilitated whiteboard session, the real power emerges. The
+         Strengths-Flow Fusion Matrix reveals synergies, gaps, and leadership
+         capacity — in hours, not months.
+      UL:
+        - Strengths-Flow Fusion Mapping
+        - Team gap and balance analysis
+        - Dynamic leadership capacity surfacing
+        - Shared visioning workshop
+        - 4–6 hour facilitated format
+    [Col 2]:
+      H4: Strengths Flow Fusion Matrix
+      IMG: team-lion-star-cards-strengths-flow-fusion.png
+
+  BLOCKQUOTE:
+    "By understanding and leveraging one's strengths, a flow state can be
+    achieved leading to optimal performance for individuals, teams, and
+    organizations."
+    — Dr. Mihaly Csikszentmihalyi
+
+════════════════════════
+SECTION 7 — EMPOWERS ORGANIZATIONS (Constellations)
+════════════════════════
+
+  LABEL: CONSTELLATIONS
+  H1: <em style="color:var(--color-accent-orange)">Empowers Organizations</em>
+  P: The individual microcourse is complete on its own. When multiple team
+     members have gone through it, something remarkable becomes possible: a
+     living talent map that surfaces synergies no other tool can reveal.
+  IMG: ORGANIZATION-CONSTELLATION.png  (full width)
+
+════════════════════════
+SECTION 8 — PROFESSIONAL ASSOCIATIONS
+════════════════════════
+
+  LABEL: PROFESSIONAL ASSOCIATIONS
+  H1: Your Pathway: Profession Accreditation.
+  P: Across every major profession — project management, HR, engineering,
+     finance, law, coaching — members must demonstrate "Soft Skills" competence
+     and earn recertification credits every 3 years on average. AllStarTeams
+     addresses these core competencies practically all associations require:
+     Self-Management, Communication, Collaboration, Adaptive Thinking, and
+     Resilience.
+
+  CARDS (3 cols):
+    [Card]: H4: PMI · Project Management
+            P: PDU Eligible — Verified. Earns units across the PMI Talent
+               Triangle: Leadership, Strategic & Business Management, and
+               Technical Project Management.
+    [Card]: H4: SHRM · Human Resources
+            P: Addresses core HR competencies including self-awareness,
+               psychological safety, collaborative leadership, and
+               organizational effectiveness.
+    [Card]: H4: And Many More
+            P: ASME · CPA · ACCA · IMA · ABA · CIPD · IPMA · ATD · ICF ·
+               IEEE · ASCE — whether or not your employer invests, your
+               association pathway is open.
+
+  CARDS (2 cols — stat cards):
+    [Card]: STAT: (large number implied — "millions")
+            H4: Association Members
+            P: Across PMI, SHRM, ATD, ICF, IEEE, ASCE, CPA, ABA and more —
+               the individual professional development market is enormous and
+               underserved.
+    [Card]: STAT: 3 years avg
+            H4: Avg. Recertification Cycle
+            P: Every major profession requires demonstrated soft skills
+               competence on a recurring basis — a need AllStarTeams is
+               purpose-built to address.
+
+  BLOCKQUOTE:
+    "AllStarTeams is an outstanding resource for team development and individual
+    growth. The structured exercises enhance self-awareness, strategic thinking,
+    and empathy — empowering individuals to reach their full potential. Its
+    emphasis on both individual and team dynamics, including AI-curated profiles,
+    makes it invaluable for creating cohesive, innovative, and resilient teams."
+    — Cassio Reis, PMP — Director of Governance, PMI Manitoba
+
+════════════════════════
+SECTION 9 — THE NEW LOGO
+════════════════════════
+
+  GRID (2 cols):
+    [Col 1]:
+      IMG: 2-icons-ai-ast.png
+    [Col 2]:
+      H1: The New Logo
+      P: These paired icons represent the spirit of AllStarTeams: the
+         individual and their connection to the team. Inspired by the
+         now-iconic AI sparkle, the symbol has been reimagined as a five-point
+         form that reflects the individual and the five human strengths that
+         link each person to their teammates. Together, the mark expresses a
+         human-centered approach to teamwork — one that strengthens people
+         while engaging AI thoughtfully and intentionally.
+
+════════════════════════
+SECTION 10 — THE DEEPER PATH (bridge to Imaginal Agility)
+════════════════════════
+
+  LABEL: THE DEEPER PATH
+  H1: AllStarTeams is grounding. Now go beyond.
+  P: AllStarTeams stands completely on its own — an immediate, actionable
+     self-awareness practice for any individual or team. For those ready to go
+     further, it connects naturally to Imaginal Agility: a Neuroscience-based
+     Microcourse empowering people's agency and metacognition to collaborate
+     more effectively with AI.
+  IMG: wired-to-imagine.png  (full width)
+  BTN-GROUP:
+    BTN[solid]: Start with AllStarTeams   [href="#"]
+    BTN[outline]: Explore Imaginal Agility →  [href="https://ImaginalAgility.com"]
+
+════════════════════════
+SECTION 11 — ALLSTARTEAMS AT SCHOOL (Education intro)
+════════════════════════
+
+  LABEL: EDUCATION
+  H1: AllStarTeams at School
+  IMG: Picture1.png  (full width banner — wide landscape image)
+  P: Over two decades, AllStarTeams and its predecessor Prelude Suite have
+     benefitted more than 25,000 students worldwide — across diverse cultures,
+     institutions, and age groups — from mainstream youth to at-risk populations.
+     Self-awareness is the foundation of every learning journey.
+
+  STATS GRID (3 cols):
+    [Col 1]: STAT: 25,000+    LABEL: Students Benefitted Worldwide
+    [Col 2]: STAT: 10+        LABEL: Years of Educational Impact
+    [Col 3]: STAT: 6          LABEL: Continents Reached
+
+════════════════════════
+SECTION 12 — EDUCATIONAL CONTINUUM (layout: right accent)
+════════════════════════
+
+  LABEL: THE EDUCATIONAL CONTINUUM
+  H1: From Middle School to Graduate School.
+  P: AllStarTeams scales across the full educational continuum — from early
+     adolescence through advanced professional education. Value increases
+     proportionally moving from mainstream to disadvantaged and at-risk youth.
+
+  CARDS (5 — vertical list or horizontal scroll on mobile):
+    [Card]: H4: Middle School (Ages 11–14)
+            P: Building foundational self-awareness, emotional vocabulary,
+               self-esteem, and identity before habits solidify.
+    [Card]: H4: Secondary / High School (Ages 14–18)
+            P: Strengthening confidence, resilience, team dynamics, and
+               emerging leadership during formative years.
+    [Card]: H4: Vocational School
+            P: Developing life-work skills, career readiness, and practical
+               teamwork for real-world transitions.
+    [Card]: H4: College / Post-Secondary
+            P: Preparing graduates for workplace realities: orientation, cohort
+               bonding, communication, and leadership.
+    [Card]: H4: University / Graduate School
+            P: Deepening strategic self-knowledge for project teams, research
+               collaboration, and emerging leaders.
+
+  H2: Wide Application Across the Learner Spectrum
+  P: The value of AllStarTeams increases proportionally across the learner
+     spectrum — from mainstream classrooms to the most challenging at-risk
+     environments.
+
+  CARDS (3 cols):
+    [Card]: H4: Mainstream Youth
+            P: Builds self-awareness, collaboration, and a can-do attitude in
+               everyday classroom settings.
+    [Card]: H4: At-Risk Youth
+            P: Develops empathy, life skills, and positive identity for students
+               facing social or economic challenges.
+    [Card]: H4: High-Risk Youth
+            P: Proven effective in gang rehabilitation, aggression replacement
+               training, and residential treatment programs.
+
+════════════════════════
+SECTION 13 — CURRICULUM
+════════════════════════
+
+  LABEL: CURRICULUM
+  H1: Versatile by Design. Fits Any Curriculum.
+  P: AllStarTeams (AST) was employed effectively across the curriculum and in
+     extra-curricular programs — integrating into existing educational frameworks
+     without displacing them. It adapts to the institution's needs while earning
+     students recognized credentials.
+
+  H4: Curriculum Integration Modes
+  CARDS (4 cols):
+    [Card]: H4: Standalone Microcourse
+            P: A complete 90-minute module offered as an independent course or
+               workshop.
+    [Card]: H4: Embedded Module
+            P: Integrated into existing courses: leadership, business,
+               psychology, counseling, career development.
+    [Card]: H4: Program-Wide Deployment
+            P: Adopted across a full program or faculty for cohort-level
+               self-awareness development.
+    [Card]: H4: Co-Curricular
+            P: Delivered through student services, career centers, or
+               orientation programs.
+
+  H4: Proven Across 18+ Program Types
+  GRID (3 cols — bullet lists):
+    [Col 1]: Aggression Replacement Training / Adult Basic Education /
+             Career Internship Program / Drop Out Prevention /
+             Eco Leadership Program / English Language Arts
+    [Col 2]: Ethics & Religious Studies / Gang Remediation /
+             Intern Program / Leadership Skills /
+             Life – Work Skills / Mentor Program
+    [Col 3]: Newcomers Program / College Orientation /
+             Residential Treatment / Retraining /
+             Co-Curricular Programs / Extra-Curricular Programs
+
+  H4: Delivery Modes
+  CARDS (3 cols):
+    [Card]: H4: In Class
+            P: Adapts to any school schedule and classroom format.
+    [Card]: H4: Hybrid
+            P: Blends in-person and remote participation seamlessly.
+    [Card]: H4: Remote
+            P: Fully online delivery with no loss of engagement or impact.
+    NOTE: 4th mode also exists:
+    H4: Tech Agnostic
+    P: Works with most collaboration & communication platforms, online
+       interactive whiteboards, and learning management systems.
+
+════════════════════════
+SECTION 14 — PEDAGOGICAL FRAMEWORK
+════════════════════════
+
+  LABEL: PEDAGOGICAL FRAMEWORK
+  H1: Supports How Students Actually Learn.
+  P: AllStarTeams is grounded in proven educational frameworks — supporting
+     formative assessment, positive youth development, and project-based
+     learning.
+
+  CARDS (3 cols):
+    [Card]: H4: Formative Assessment
+            P: AllStarTeams scaffolded exercises enhance and widen students'
+               self-awareness and appreciation of peers' commonalities and
+               differences — building the metacognitive habits that support
+               continuous learning.
+    [Card]: H4: Positive Youth Development (PYD)
+            P: Aligned with PYD principles, enabling students to practice and
+               embody them experientially: use experiential learning, develop
+               assets, foster belonging, and build competence.
+    [Card]: H4: Project-Based Learning
+            P: The AllStarTeams experience is structured like a project,
+               calling for students to work effectively as teams by playing to
+               individual strengths and flow states.
+
+════════════════════════
+SECTION 15 — CASE STUDY: DirectED UK
+════════════════════════
+
+  LABEL: EDUCATION PARTNER · CASE STUDY
+  H1: DirectED UK
+  P: DirectEd Mission: Preparing African Youth for the Future of Work
+  P: World-class training and remote paid internships with US and European
+     companies. Web development, UIX and Artificial Intelligence.
+  P: AllStarTeams Program
+  P: 40+ Students (Ages 17–22) Across Kenya and Ethiopia
+  P: • Completed the full AllStarTeams Micro Course and Team Whiteboard
+       experience • Strengthened confidence, self-awareness, and cross-cultural
+       collaboration skills
+  IMG: Picture8.png  (DirectEd case study image, 573×331)
+  BLOCKQUOTE:
+    "The AllStarTeams proved transformative for our students. As a tech educator,
+    we've found this is an extremely important tool in our toolkit."
+    — Simon Sällström, CEO, DirectEd Development
+
+════════════════════════
+SECTION 16 — PARTNERSHIP: ICIE
+════════════════════════
+
+  LABEL: EDUCATION PARTNER · GLOBAL NETWORK
+  H1: International Center for Innovation in Education (ICIE)
+  P: AllStarTeams has formed a strategic partnership with the International
+     Center for Innovation in Education (ICIE) — a global organization
+     dedicated to advancing gifted, creative, and exceptional education
+     worldwide.
+  P: ICIE connects AllStarTeams to a global community of educators committed
+     to developing the whole learner — not just academic outcomes.
+
+  H4: Partnership Benefits:
+  UL:
+    - Access to ICIE's global educator network (80+ countries)
+    - Co-presentation opportunities at international conferences
+    - Research collaboration on self-awareness outcomes in gifted education
+    - Pathway to international curriculum integration
+    - Joint publications and thought leadership
+
+════════════════════════
+SECTION 17 — TESTIMONIALS
+════════════════════════
+
+  LABEL: TESTIMONIALS
+  H1: What Educators Are Saying.
+
+  BLOCKQUOTE:
+    "AllStarTeams changed my classroom and my practice. It helps students
+    develop self-esteem, a can-do attitude, and real working-world skills."
+    — Gail Klinck, Middle School Teacher, Massey Vanier High School, Quebec
+
+  BLOCKQUOTE:
+    "AllStarTeams was beneficial and very worthwhile. It enables students and
+    teachers to discover their special attributes."
+    — Adriano Magnifico, Program Head, Louis Riel School District, Manitoba
+
+  BLOCKQUOTE:
+    "AllStarTeams falls in line with our Medicine Wheel for the Woodland Cree
+    People. It really was effective in pulling our group together."
+    — Nora Yellowknee, Curriculum Supervisor, Bigstone First Nation, Alberta
+
+  BLOCKQUOTE:
+    "Not enough can be said about AllStarTeams usefulness in helping antisocial
+    youth develop crucial life skills like empathy, cooperation, and
+    self-regulation."
+    — Robert Calame, A.R.T. Counsellor, Place Cartier Adult Education Centre
+
+  BLOCKQUOTE:
+    "In all my years facilitating workshops of one month, one week, and even
+    one day, I've never seen students learn about themselves and each other so
+    quickly and deeply."
+    — J.D. Szezepaniak, Life Skills Coach, Northern Lakes College
+
+  BLOCKQUOTE:
+    "This is an excellent way for new project teams to build trust, align on
+    expectations, and facilitate collaboration. We used it on 12 enterprise
+    architecture projects."
+    — Dr. Alexander Zak, UC San Diego, Jacobs School of Engineering &
+      Rady School of Management
+
+════════════════════════
+SECTION 18 — GET STARTED (CTA)
+════════════════════════
+
+  LABEL: GET STARTED
+  H1: Bring AllStarTeams to Your Institution.
+  H3: The next generation deserves to know themselves.
+  P: Whether you're a school counselor, faculty member, program director,
+     or institutional leader — AllStarTeams Education is ready to partner
+     with you. Start with a pilot. Scale at your pace. Transform how your
+     learners understand themselves and each other.
+  P: Every student who completes the AllStarTeams microcourse leaves with
+     something no grade can give them: a clear, evidence-based understanding
+     of who they are and what they're capable of.
+
+  H4: Connect With Us
+  UL:
+    - Pilot program inquiries
+    - Institutional licensing
+    - Research partnerships
+    - Educator certification
+    - Conference presentations
+
+  BTN-GROUP:
+    BTN[solid]: Start a Conversation  [href="#"]
+    BTN[outline]: Brochure →           [href="#"]
+
+[FOOTER]
+  P (centered, small): © 2026 AllStarTeams / Heliotrope Imaginal.
+                        All rights reserved.
+
+---
+
+## STEP 4 — README
+
+Write `newsite/README.md` with:
+- Brief description of the site
+- Setup: run download-images.sh, then optimize-images.sh, open index.html
+  locally or push to GitHub Pages
+- Pending link table (see Link Audit section above)
+- Note that "Explore Imaginal Agility →" is the only pre-wired external link
+
+---
+
+## TECHNICAL REQUIREMENTS
+
+- Pure HTML + CSS. No npm, no build tools, no frameworks.
+- Load fonts from Google Fonts (DM Sans + Inter).
+- AOS from CDN for scroll animations (data-aos="fade-up" on section headings
+  and card groups, initialize with duration:700, once:true).
+- Responsive: mobile-first, all multi-col grids collapse below 768px.
+- All img tags: width + height attributes matching post-optimized dimensions,
+  loading="lazy" except hero logo.
+- CSS custom properties for all theme values.
+- Validate: zero href values contain "gamma.app".
+- Orange italic effect: use <em class="accent"> with CSS color: var(--color-accent-orange)
+  font-style: italic applied to the relevant words in H1s.
+- The callout box in Section 4 should have a navy left border and bold text.
+- Blockquotes: styled with orange left border, italic text, attribution in
+  small normal weight text below.
+- For the 5-stage educational continuum (Section 12), use a horizontal flex
+  layout on desktop with numbered steps or a visual progression indicator.
