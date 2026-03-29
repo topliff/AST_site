@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms and Conditions — AllStarTeams</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .legal-page { max-width: 860px; margin: 0 auto; padding: 60px 24px 80px; }
+    .legal-page h1 { margin-bottom: 8px; }
+    .legal-page .effective-date { font-size: 0.9rem; color: var(--color-body); margin-bottom: 32px; }
+    .legal-page h2 { font-size: 1.4rem; margin-top: 32px; margin-bottom: 12px; }
+    .legal-page p, .legal-page li { color: var(--color-body); line-height: 1.8; }
+    .legal-page ul { padding-left: 24px; margin-bottom: 16px; }
+    .legal-page li { margin-bottom: 6px; }
+    .legal-page a { color: var(--color-accent-navy); }
+  </style>
+</head>
+<body>
+
+<div class="legal-page">
+  <p><a href="index.html">&larr; Back to AllStarTeams</a></p>
+  <h1>Terms and Conditions</h1>
+  <p class="effective-date">Effective Date: March 29, 2026</p>
+
+  <p>These Terms and Conditions ("Terms") govern your use of the AllStarTeams website and services operated by Heliotrope Imaginal Education Systems, Inc. ("we," "us," or "our"). By accessing or using our website, you agree to be bound by these Terms.</p>
+
+  <h2>1. Use of Services</h2>
+  <p>You agree to use our website and services only for lawful purposes and in accordance with these Terms. You may not:</p>
+  <ul>
+    <li>Use the services in any way that violates applicable laws or regulations</li>
+    <li>Attempt to gain unauthorized access to any part of the services</li>
+    <li>Use the services to transmit harmful, offensive, or illegal content</li>
+    <li>Interfere with or disrupt the services or servers</li>
+  </ul>
+
+  <h2>2. Intellectual Property</h2>
+  <p>All content on this website — including text, graphics, logos, images, course materials, the AllStarTeams methodology, and software — is the property of Heliotrope Imaginal Education Systems, Inc. or its licensors and is protected by copyright, trademark, and other intellectual property laws.</p>
+  <p>You may not reproduce, distribute, modify, create derivative works from, or publicly display any content from this website without our prior written consent.</p>
+
+  <h2>3. Pilot Program Participation</h2>
+  <p>By signing up for a pilot program, you acknowledge that:</p>
+  <ul>
+    <li>Participation is subject to availability and our confirmation</li>
+    <li>Program content, schedules, and formats may be modified at our discretion</li>
+    <li>Pilot programs are provided for evaluation and development purposes</li>
+    <li>Feedback and insights shared during the pilot may be used to improve our programs (without identifying you personally, unless you consent)</li>
+  </ul>
+
+  <h2>4. User Accounts and Information</h2>
+  <p>You are responsible for ensuring that any information you provide to us is accurate and up to date. You agree not to submit false or misleading information through our forms or services.</p>
+
+  <h2>5. Disclaimer of Warranties</h2>
+  <p>Our website and services are provided "as is" and "as available" without warranties of any kind, either express or implied. We do not warrant that the services will be uninterrupted, error-free, or free of harmful components.</p>
+
+  <h2>6. Limitation of Liability</h2>
+  <p>To the fullest extent permitted by law, Heliotrope Imaginal Education Systems, Inc. shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our website or services, regardless of the cause of action or theory of liability.</p>
+
+  <h2>7. Indemnification</h2>
+  <p>You agree to indemnify and hold harmless Heliotrope Imaginal Education Systems, Inc., its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from your use of the services or violation of these Terms.</p>
+
+  <h2>8. Third-Party Links and Services</h2>
+  <p>Our website may contain links to third-party websites or services. We are not responsible for the content, accuracy, or practices of third-party sites and do not endorse them.</p>
+
+  <h2>9. Modifications to Terms</h2>
+  <p>We reserve the right to modify these Terms at any time. Changes will be posted on this page with an updated effective date. Your continued use of the website after changes are posted constitutes acceptance of the revised Terms.</p>
+
+  <h2>10. Governing Law</h2>
+  <p>These Terms shall be governed by and construed in accordance with the laws of the United States, without regard to conflict of law principles.</p>
+
+  <h2>11. Severability</h2>
+  <p>If any provision of these Terms is found to be unenforceable, the remaining provisions shall continue in full force and effect.</p>
+
+  <h2>12. Contact Us</h2>
+  <p>If you have questions about these Terms, please contact us:</p>
+  <p>Heliotrope Imaginal Education Systems, Inc.<br>
+  <a href="#" onclick="openContactModal(event)">Contact Us</a></p>
+</div>
+
+<!-- CONTACT MODAL -->
+<div id="contactModal" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); align-items:center; justify-content:center;">
+  <div style="background:#fff; border:1px solid rgba(0,0,0,0.1); border-radius:12px; max-width:520px; width:90%; padding:36px; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.15);">
+    <button onclick="closeContactModal()" style="position:absolute; top:12px; right:16px; background:none; border:none; color:rgba(0,0,0,0.4); font-size:24px; cursor:pointer;">&times;</button>
+    <h2 style="font-family:'DM Sans',sans-serif; font-weight:700; font-size:1.5rem; color:rgb(32,76,142); margin-bottom:16px;">Contact Us</h2>
+    <form id="contactForm" onsubmit="handleContactSubmit(event)">
+      <div style="margin-bottom:16px;">
+        <label style="display:block; font-weight:600; color:rgb(22,22,19); margin-bottom:4px; font-size:0.9rem;">Name *</label>
+        <input type="text" id="contactName" required style="width:100%; background:rgb(249,248,245); border:1px solid rgba(0,0,0,0.15); border-radius:6px; padding:10px 12px; color:rgb(22,22,19); font-family:'Inter',sans-serif; font-size:16px; outline:none;">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block; font-weight:600; color:rgb(22,22,19); margin-bottom:4px; font-size:0.9rem;">Email *</label>
+        <input type="email" id="contactEmail" required style="width:100%; background:rgb(249,248,245); border:1px solid rgba(0,0,0,0.15); border-radius:6px; padding:10px 12px; color:rgb(22,22,19); font-family:'Inter',sans-serif; font-size:16px; outline:none;">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block; font-weight:600; color:rgb(22,22,19); margin-bottom:4px; font-size:0.9rem;">Subject</label>
+        <input type="text" id="contactSubject" style="width:100%; background:rgb(249,248,245); border:1px solid rgba(0,0,0,0.15); border-radius:6px; padding:10px 12px; color:rgb(22,22,19); font-family:'Inter',sans-serif; font-size:16px; outline:none;">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block; font-weight:600; color:rgb(22,22,19); margin-bottom:4px; font-size:0.9rem;">Message *</label>
+        <textarea id="contactMessage" required rows="4" style="width:100%; background:rgb(249,248,245); border:1px solid rgba(0,0,0,0.15); border-radius:6px; padding:10px 12px; color:rgb(22,22,19); font-family:'Inter',sans-serif; font-size:16px; outline:none; resize:vertical;"></textarea>
+      </div>
+      <div id="contactError" style="display:none; background:rgba(220,50,50,0.08); border:1px solid rgba(220,50,50,0.3); color:#b33; padding:10px 14px; border-radius:6px; margin-bottom:14px;"></div>
+      <button type="submit" class="btn-solid" id="contactSubmitBtn" style="width:100%; font-size:1rem;">Send Message</button>
+    </form>
+    <div id="contactSuccess" style="display:none; text-align:center; padding:24px 0;">
+      <h3 style="color:rgb(32,76,142); margin-bottom:8px;">Message Sent!</h3>
+      <p style="color:rgb(77,77,77);">We'll get back to you soon.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZAOkLMRlyK_WAu8pN_dQgcthXf-Df10sAmzjObixEah76kavqmUoCJQgiWfmQKKwd/exec';
+  function openContactModal(e) {
+    if (e) e.preventDefault();
+    var modal = document.getElementById('contactModal');
+    modal.style.display = 'flex';
+    document.getElementById('contactForm').style.display = '';
+    document.getElementById('contactSuccess').style.display = 'none';
+    document.getElementById('contactError').style.display = 'none';
+    document.getElementById('contactForm').reset();
+    document.getElementById('contactSubmitBtn').disabled = false;
+    document.getElementById('contactSubmitBtn').textContent = 'Send Message';
+  }
+  function closeContactModal() { document.getElementById('contactModal').style.display = 'none'; }
+  document.getElementById('contactModal').addEventListener('click', function(e) { if (e.target === this) closeContactModal(); });
+  function handleContactSubmit(e) {
+    e.preventDefault();
+    var errEl = document.getElementById('contactError');
+    errEl.style.display = 'none';
+    var name = document.getElementById('contactName').value.trim();
+    var email = document.getElementById('contactEmail').value.trim();
+    var message = document.getElementById('contactMessage').value.trim();
+    if (!name || !email || !message) { errEl.textContent = 'Please fill in all required fields.'; errEl.style.display = 'block'; return; }
+    var btn = document.getElementById('contactSubmitBtn');
+    btn.disabled = true; btn.textContent = 'Sending...';
+    fetch(SCRIPT_URL, {
+      method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ formType: 'contact', source: 'AllStarTeams', name: name, email: email, subject: document.getElementById('contactSubject').value.trim(), message: message })
+    }).then(function() { document.getElementById('contactForm').style.display = 'none'; document.getElementById('contactSuccess').style.display = 'block'; })
+    .catch(function() { errEl.textContent = 'Something went wrong. Please try again.'; errEl.style.display = 'block'; btn.disabled = false; btn.textContent = 'Send Message'; });
+  }
+</script>
+</body>
+</html>

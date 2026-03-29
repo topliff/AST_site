@@ -317,6 +317,14 @@ footer {
   color: var(--color-body);
   border-top: 1px solid var(--color-divider);
 }
+footer a {
+  color: var(--color-body);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+footer a:hover {
+  color: var(--color-accent-navy);
+}
 
 /* --- Section backgrounds (alternate) --- */
 section:nth-child(even) {
